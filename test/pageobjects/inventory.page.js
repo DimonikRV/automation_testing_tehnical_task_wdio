@@ -10,6 +10,9 @@ class InventoryPage extends Page {
   get addToCartBtn() {
     return $("#add-to-cart-sauce-labs-backpack");
   }
+  get addToCartSecondBtn() {
+    return $("#add-to-cart-sauce-labs-bike-light");
+  }
   get removeToCartBtn() {
     return $("#remove-sauce-labs-backpack");
   }
@@ -31,17 +34,9 @@ class InventoryPage extends Page {
   get inventoryItemsPrice() {
     return $(".inventory_list [data-test='inventory-item-price']");
   }
-  get twitterSocialItem() {
-    return $(`[data-test='social-twitter']`);
-  }
-  get facebookSocialItem() {
-    return $(`[data-test='social-facebook']`);
-  }
-  get linkedinSocialItem() {
-    return $(`[data-test='social-linkedin']`);
-  }
+
   getSocialItem(link) {
-    return $(`[data-test='social-${link}']`);
+    return $(`[data-test="social-${link}"]`);
   }
 
   getproductSelectOption(value) {
@@ -51,9 +46,10 @@ class InventoryPage extends Page {
   open(path) {
     return super.open(path);
   }
-
-  async getSelectedItemName() {
+  async isRemoveButton() {
     await expect(this.removeToCartBtn).toExist();
+  }
+  async getSelectedItemName() {
     const inventoryDescriptionItem = await this.removeToCartBtn
       .parentElement()
       .parentElement();
@@ -71,9 +67,17 @@ class InventoryPage extends Page {
     await expect(browser).toHaveUrl("https://www.saucedemo.com/");
   }
 
-  async addToCart() {
+  async addToCart(amount) {
+    if (amount) {
+      await this.addToCartBtn.click();
+      await this.addToCartSecondBtn.click();
+      return;
+    }
     await this.addToCartBtn.click();
     await expect(this.cartBadge).toExist();
+  }
+  async removeFromCard() {
+    await this.removeToCartBtn.click();
   }
 
   async getToCart() {
@@ -114,8 +118,11 @@ class InventoryPage extends Page {
     await browser.switchWindow("https://www.saucedemo.com/inventory.html");
   }
 
-  async isntProductsInCart() {
-    await this.cartBadge.waitForExist({ timeout: 1000, reverse: true });
+  async isProductsInCart(yes) {
+    if (yes) {
+      return await this.cartBadge.waitForExist({ timeout: 6000 });
+    }
+    await this.cartBadge.waitForExist({ timeout: 6000, reverse: true });
   }
 }
 

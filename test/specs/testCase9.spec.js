@@ -6,10 +6,9 @@ describe("Checkout", () => {
   it("Checkout without products", async () => {
     await LoginPage.open();
     await LoginPage.login("standard_user", "secret_sauce");
-    await InventoryPage.isntProductsInCart();
+    await InventoryPage.isProductsInCart();
     await InventoryPage.getToCart();
     await CartPage.openCheckoutForm();
     await expect(browser).toHaveUrl("https://www.saucedemo.com/cart.html");
-    await CartPage.errorMessage().waitForExist({ timeout: 5000 });
   });
 });

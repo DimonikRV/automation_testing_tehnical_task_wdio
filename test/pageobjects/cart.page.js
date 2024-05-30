@@ -17,9 +17,13 @@ class CartPage extends Page {
 
   async verifyItemsInCart(text) {
     await expect(browser).toHaveUrl("https://www.saucedemo.com/cart.html");
+    if (!text) {
+      return await this.cartItem.waitForExist({ timeout: 6000, reverse: true });
+    }
     await expect(this.cartItem).toExist();
     await expect(this.cartItemName).toHaveText(expect.stringContaining(text));
   }
+
   async openCheckoutForm() {
     await this.checkoutButton.click();
   }
