@@ -10,6 +10,9 @@ class CartPage extends Page {
   get checkoutButton() {
     return $("#checkout");
   }
+  get removeCartButtons() {
+    return $$(".cart_button");
+  }
 
   open(path) {
     return super.open(path);
@@ -26,6 +29,9 @@ class CartPage extends Page {
 
   async openCheckoutForm() {
     await this.checkoutButton.click();
+  }
+  async removeCardsFromCart() {
+    await this.removeCartButtons.map((removeButtons) => removeButtons.click());
   }
 }
 

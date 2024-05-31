@@ -68,13 +68,26 @@ class InventoryPage extends Page {
   }
 
   async addToCart(amount) {
-    if (amount) {
-      await this.addToCartBtn.click();
+    if (amount === 2) {
       await this.addToCartSecondBtn.click();
       return;
     }
     await this.addToCartBtn.click();
-    await expect(this.cartBadge).toExist();
+  }
+  async verifyCartBage(yes, amount) {
+    if (!yes) {
+      return await this.cartBadge.waitForExist({
+        timeout: 6000,
+        reverse: true,
+      });
+    }
+    await this.cartBadge.waitForExist({ timeout: 6000 });
+    if (amount === 2) {
+      return await expect(this.cartBadge).toHaveText(
+        expect.stringContaining("2")
+      );
+    }
+    await expect(this.cartBadge).toHaveText(expect.stringContaining("1"));
   }
   async removeFromCard() {
     await this.removeToCartBtn.click();
@@ -116,13 +129,6 @@ class InventoryPage extends Page {
       );
     }
     await browser.switchWindow("https://www.saucedemo.com/inventory.html");
-  }
-
-  async isProductsInCart(yes) {
-    if (yes) {
-      return await this.cartBadge.waitForExist({ timeout: 6000 });
-    }
-    await this.cartBadge.waitForExist({ timeout: 6000, reverse: true });
   }
 }
 

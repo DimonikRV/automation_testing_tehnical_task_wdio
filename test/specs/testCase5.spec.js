@@ -6,8 +6,8 @@ describe("Cart", () => {
   it("Saving the card after logout", async () => {
     await LoginPage.open();
     await LoginPage.login("standard_user", "secret_sauce");
-    await InventoryPage.addToCart();
-    await InventoryPage.isRemoveButton();
+    await InventoryPage.addToCart(1);
+    await InventoryPage.verifyCartBage("yes", 1);
     const selectedItemName = await InventoryPage.getSelectedItemName();
     await InventoryPage.getToCart();
     await CartPage.verifyItemsInCart(selectedItemName);

@@ -18,6 +18,9 @@ class CheckoutPage extends Page {
   get errorMessage() {
     return $('h3[data-test="error"]');
   }
+  get cancelButton() {
+    return $("#cancel");
+  }
 
   open(path) {
     return super.open(path);
@@ -65,6 +68,9 @@ class CheckoutPage extends Page {
         expect.stringContaining("Error: First Name is required")
       );
     }
+  }
+  async getBackToCartPage() {
+    await this.cancelButton.click();
   }
 }
 

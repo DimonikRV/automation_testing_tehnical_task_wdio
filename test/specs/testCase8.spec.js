@@ -9,7 +9,8 @@ describe("e2e", () => {
   it("Valid checkout", async () => {
     await LoginPage.open();
     await LoginPage.login("standard_user", "secret_sauce");
-    await InventoryPage.addToCart();
+    await InventoryPage.addToCart(1);
+    await InventoryPage.verifyCartBage("yes", 1);
     await InventoryPage.isRemoveButton();
     const selectedItemName = await InventoryPage.getSelectedItemName();
     const selectedItemPrice = await InventoryPage.getSelectedItemPrice();
@@ -23,6 +24,6 @@ describe("e2e", () => {
     await OverviewPage.finishCheckout();
     await CheckoutCompletePage.verifyCheckoutCompleteTitle();
     await CheckoutCompletePage.getBackToInventoryPage();
-    await InventoryPage.isProductsInCart();
+    await InventoryPage.verifyCartBage();
   });
 });
