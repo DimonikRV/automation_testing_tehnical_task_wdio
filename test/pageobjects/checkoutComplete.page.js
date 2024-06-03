@@ -2,7 +2,7 @@ const Page = require("./page");
 
 class CheckoutCompletePage extends Page {
   get backHomeButton() {
-    return $("#back-to-products");
+    return $("button[data-test='back-to-products']");
   }
   get subTitle() {
     return $("h2[data-test='complete-header']");

@@ -5,10 +5,12 @@ const CartPage = require("../pageobjects/cart.page");
 describe("Checkout", () => {
   it("Checkout without products", async () => {
     await LoginPage.open();
-    await LoginPage.login("standard_user", "secret_sauce");
+    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
+    await LoginPage.login();
     await InventoryPage.verifyCartBage();
     await InventoryPage.getToCart();
     await CartPage.openCheckoutForm();
-    await expect(browser).toHaveUrl("https://www.saucedemo.com/cart.html");
+    await CartPage.isCartPage();
+    await CartPage.isErrorMessage();
   });
 });

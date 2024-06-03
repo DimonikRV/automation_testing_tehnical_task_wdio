@@ -2,24 +2,24 @@ const Page = require("./page");
 
 class CheckoutPage extends Page {
   get firstNameInput() {
-    return $("#first-name");
+    return $("input[data-test='firstName']");
   }
 
   get lastNameInput() {
-    return $("#last-name");
+    return $("input[data-test='lastName']");
   }
 
   get postalCodeInput() {
-    return $("#postal-code");
+    return $("input[data-test='postalCode']");
   }
   get submitButton() {
-    return $("#continue");
+    return $("input[data-test='continue']");
   }
   get errorMessage() {
     return $('h3[data-test="error"]');
   }
   get cancelButton() {
-    return $("#cancel");
+    return $("button[data-test='cancel']");
   }
 
   open(path) {

@@ -6,7 +6,8 @@ const CheckoutPage = require("../pageobjects/checkout.page");
 describe("Checkout", () => {
   it("Checkout with entered 'first name', 'last name' and empty 'postal code' field", async () => {
     await LoginPage.open();
-    await LoginPage.login("standard_user", "secret_sauce");
+    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
+    await LoginPage.login();
     await InventoryPage.addToCart(1);
     await InventoryPage.verifyCartBage("yes", 1);
     await InventoryPage.getToCart();
@@ -19,7 +20,8 @@ describe("Checkout", () => {
   });
   it("Checkout with entered 'first name', 'postal code' and empty 'last name' field", async () => {
     await LoginPage.open();
-    await LoginPage.login("standard_user", "secret_sauce");
+    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
+    await LoginPage.login();
     await InventoryPage.addToCart(1);
     await InventoryPage.verifyCartBage("yes", 1);
     await InventoryPage.getToCart();
@@ -32,7 +34,8 @@ describe("Checkout", () => {
   });
   it("Checkout with entered 'last name', 'post code' and empty 'first name' field", async () => {
     await LoginPage.open();
-    await LoginPage.login("standard_user", "secret_sauce");
+    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
+    await LoginPage.login();
     await InventoryPage.addToCart(1);
     await InventoryPage.verifyCartBage("yes", 1);
     await InventoryPage.getToCart();

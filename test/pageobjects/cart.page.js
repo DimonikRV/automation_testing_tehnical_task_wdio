@@ -8,10 +8,13 @@ class CartPage extends Page {
     return $('.cart_item [data-test="inventory-item-name"]');
   }
   get checkoutButton() {
-    return $("#checkout");
+    return $("button[data-test='checkout']");
   }
   get removeCartButtons() {
-    return $$(".cart_button");
+    return $$("button=Remove");
+  }
+  get errorMessage() {
+    return $("aria/Cart is empty");
   }
 
   open(path) {
@@ -31,7 +34,15 @@ class CartPage extends Page {
     await this.checkoutButton.click();
   }
   async removeCardsFromCart() {
-    await this.removeCartButtons.map((removeButtons) => removeButtons.click());
+    await this.removeCartButtons.forEach((removeButton) =>
+      removeButton.click()
+    );
+  }
+  async isCartPage() {
+    await expect(browser).toHaveUrl("https://www.saucedemo.com/cart.html");
+  }
+  async isErrorMessage() {
+    await this.errorMessage.isDisplayed();
   }
 }
 

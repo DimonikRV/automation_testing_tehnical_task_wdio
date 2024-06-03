@@ -5,34 +5,47 @@ class InventoryPage extends Page {
     return $("#react-burger-menu-btn");
   }
   get logoutLink() {
-    return $("[data-test='logout-sidebar-link']");
+    return $("a[data-test='logout-sidebar-link']");
   }
-  get addToCartBtn() {
-    return $("#add-to-cart-sauce-labs-backpack");
+  get inventoryLink() {
+    return $("a[data-test='inventory-sidebar-link']");
   }
-  get addToCartSecondBtn() {
-    return $("#add-to-cart-sauce-labs-bike-light");
+  get aboutLink() {
+    return $("a[data-test='about-sidebar-link']");
   }
-  get removeToCartBtn() {
-    return $("#remove-sauce-labs-backpack");
+  get resetLink() {
+    return $("a[data-test='reset-sidebar-link']");
+  }
+  get addCartButtons() {
+    return $$("button=Add to cart");
+  }
+  get removeCartButton() {
+    return $("button=Remove");
+  }
+  get removeCartButtons() {
+    return $$("button=Remove");
   }
   get cartLink() {
     return $(".shopping_cart_link[data-test='shopping-cart-link']");
   }
   get cartBadge() {
-    return $(".shopping_cart_badge");
+    return $("span[data-test='shopping-cart-badge']");
   }
   get productSortSelect() {
     return $("[data-test='product-sort-container']");
   }
   get inventoryItemsTitles() {
-    return $$(".inventory_list [data-test='inventory-item-name']");
+    return $$(".inventory_item [data-test='inventory-item-name']");
   }
   get inventoryItemsPrices() {
-    return $$(".inventory_list [data-test='inventory-item-price']");
+    return $$(".inventory_item [data-test='inventory-item-price']");
   }
   get inventoryItemsPrice() {
-    return $(".inventory_list [data-test='inventory-item-price']");
+    return $(".inventory_item [data-test='inventory-item-price']");
+  }
+
+  open(path) {
+    return super.open(path);
   }
 
   getSocialItem(link) {
@@ -43,14 +56,40 @@ class InventoryPage extends Page {
     return $(`option[value=${value}]`);
   }
 
-  open(path) {
-    return super.open(path);
+  isAscSorted(textArray) {
+    return textArray.every((value, index, array) => {
+      if (index === 0) return true;
+      return value >= array[index - 1];
+    });
+  }
+
+  isDescSorted(textArray) {
+    return textArray.every((value, index, array) => {
+      if (index === 0) return true;
+      return value <= array[index - 1];
+    });
+  }
+
+  async isSidebarElements() {
+    await this.burgerMenuButton.click();
+    const logoutLinkElem = await this.logoutLink;
+    const inventoryLinkElem = await this.inventoryLink;
+    const aboutLinkElem = await this.aboutLink;
+    const resetLinkElem = await this.resetLink;
+    const sidebarElements = $$([
+      logoutLinkElem,
+      inventoryLinkElem,
+      aboutLinkElem,
+      resetLinkElem,
+    ]);
+    await sidebarElements.forEach((elem) => elem.isDisplayed());
   }
   async isRemoveButton() {
-    await expect(this.removeToCartBtn).toExist();
+    await expect(this.removeCartButton).toExist();
   }
+
   async getSelectedItemName() {
-    const inventoryDescriptionItem = await this.removeToCartBtn
+    const inventoryDescriptionItem = await this.removeCartButton
       .parentElement()
       .parentElement();
     return await inventoryDescriptionItem
@@ -62,17 +101,16 @@ class InventoryPage extends Page {
   }
 
   async logout() {
-    await this.burgerMenuButton.click();
     await this.logoutLink.click();
     await expect(browser).toHaveUrl("https://www.saucedemo.com/");
   }
 
   async addToCart(amount) {
     if (amount === 2) {
-      await this.addToCartSecondBtn.click();
+      await this.addCartButtons[1].click();
       return;
     }
-    await this.addToCartBtn.click();
+    await this.addCartButtons[0].click();
   }
   async verifyCartBage(yes, amount) {
     if (!yes) {
@@ -89,8 +127,8 @@ class InventoryPage extends Page {
     }
     await expect(this.cartBadge).toHaveText(expect.stringContaining("1"));
   }
-  async removeFromCard() {
-    await this.removeToCartBtn.click();
+  async removeFromCart() {
+    await this.removeCartButtons.forEach((element) => element.click());
   }
 
   async getToCart() {

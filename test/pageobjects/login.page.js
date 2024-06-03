@@ -2,18 +2,18 @@ const Page = require("./page");
 
 class LoginPage extends Page {
   get inputUsername() {
-    return $("#user-name");
+    return $("input[data-test='username']");
   }
 
   get inputPassword() {
-    return $("#password");
+    return $("input[data-test='password']");
   }
 
   get btnSubmit() {
-    return $("#login-button");
+    return $("input[data-test='login-button']");
   }
   get xIcon() {
-    return $(".error_icon");
+    return $("svg.error_icon");
   }
   get inputErrorMessage() {
     return $("h3[data-test='error']");
@@ -22,18 +22,25 @@ class LoginPage extends Page {
   open(path) {
     return super.open(path);
   }
-
-  async login(username, password) {
-    await browser.setTimeout({ script: 70000 });
+  async fillOutInputs(username, password) {
+    await browser.setTimeout({ script: 80000 });
     await this.inputUsername.setValue(username);
     await this.inputPassword.setValue(password);
+  }
+  async validPasswordInput() {
+    const inputType = await this.inputUsername.getAttribute("type");
+    return inputType === "password";
+  }
+  async login() {
     await this.btnSubmit.click();
   }
-  async checkLoginForm() {
-    await expect(this.inputUsername).toHaveElementClass("error", {
-      message: "Don't show an error",
-    });
+  async checkIsError() {
     await expect(this.inputErrorMessage).toExist();
+    await expect(this.inputErrorMessage).toHaveText(
+      expect.stringContaining(
+        "Epic sadface: Username and password do not match any user in this service"
+      )
+    );
     await expect(this.xIcon).toExist();
   }
   async checkIfEmptyInputFields() {

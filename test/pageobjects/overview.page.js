@@ -14,7 +14,7 @@ class OverviewPage extends Page {
     return $("[data-test='subtotal-label']");
   }
   get finishButton() {
-    return $("#finish");
+    return $("button[data-test='finish']");
   }
 
   open(path) {
