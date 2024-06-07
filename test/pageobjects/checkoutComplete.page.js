@@ -1,6 +1,6 @@
-const Page = require("./page");
+import page from "./page";
 
-class CheckoutCompletePage extends Page {
+class CheckoutCompletePage extends page {
   get backHomeButton() {
     return $("button[data-test='back-to-products']");
   }
@@ -27,4 +27,4 @@ class CheckoutCompletePage extends Page {
   }
 }
 
-module.exports = new CheckoutCompletePage();
+export default new CheckoutCompletePage();

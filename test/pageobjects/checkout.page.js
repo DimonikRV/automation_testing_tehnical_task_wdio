@@ -1,6 +1,6 @@
-const Page = require("./page");
+import page from "./page";
 
-class CheckoutPage extends Page {
+class CheckoutPage extends page {
   get firstNameInput() {
     return $("input[data-test='firstName']");
   }
@@ -74,4 +74,4 @@ class CheckoutPage extends Page {
   }
 }
 
-module.exports = new CheckoutPage();
+export default new CheckoutPage();

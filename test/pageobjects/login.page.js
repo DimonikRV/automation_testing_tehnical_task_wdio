@@ -1,6 +1,6 @@
-const Page = require("./page");
+import page from "./page";
 
-class LoginPage extends Page {
+class LoginPage extends page {
   get inputUsername() {
     return $("input[data-test='username']");
   }
@@ -49,4 +49,4 @@ class LoginPage extends Page {
   }
 }
 
-module.exports = new LoginPage();
+export default new LoginPage();

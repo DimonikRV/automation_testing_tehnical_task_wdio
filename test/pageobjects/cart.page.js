@@ -1,6 +1,6 @@
-const Page = require("./page");
+import page from "./page";
 
-class CartPage extends Page {
+class CartPage extends page {
   get cartItem() {
     return $(".cart_item[data-test='inventory-item']");
   }
@@ -46,4 +46,4 @@ class CartPage extends Page {
   }
 }
 
-module.exports = new CartPage();
+export default new CartPage();

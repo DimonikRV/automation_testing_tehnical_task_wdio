@@ -1,6 +1,9 @@
-const Page = require("./page");
+import page from "./page";
 
-class InventoryPage extends Page {
+class InventoryPage extends page {
+  get inventoryItem() {
+    return $('.inventory-item[data-test="inventory-item"]');
+  }
   get burgerMenuButton() {
     return $("#react-burger-menu-btn");
   }
@@ -69,6 +72,11 @@ class InventoryPage extends Page {
       return value <= array[index - 1];
     });
   }
+  async isInventoryPage() {
+    await expect(browser).toHaveUrl("https://www.saucedemo.com/inventory.html");
+    await expect(this.inventoryItem).toExist();
+    await expect(this.cartLink).toExist();
+  }
 
   async isSidebarElements() {
     await this.burgerMenuButton.click();
@@ -127,6 +135,7 @@ class InventoryPage extends Page {
     }
     await expect(this.cartBadge).toHaveText(expect.stringContaining("1"));
   }
+
   async removeFromCart() {
     await this.removeCartButtons.forEach((element) => element.click());
   }
@@ -170,4 +179,4 @@ class InventoryPage extends Page {
   }
 }
 
-module.exports = new InventoryPage();
+export default new InventoryPage();
