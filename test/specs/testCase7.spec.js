@@ -1,23 +1,26 @@
-const LoginPage = require("../pageobjects/login.page");
-const InventoryPage = require("../pageobjects/inventory.page");
+import loginPage from "../pageobjects/login.page";
+import inventoryPage from "../pageobjects/inventory.page";
 
 describe("Footer links", () => {
+  const standardUser = process.env.STANDARD_USER_NAME;
+  const password = process.env.SECRET_PASSWORD;
+
   it("Twitter is opended, in the new tab, by clicking on the Twitter link", async () => {
-    await LoginPage.open();
-    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
-    await LoginPage.login();
-    await InventoryPage.selectSocialLink("twitter");
+    await loginPage.open();
+    await loginPage.fillOutInputs(standardUser, password);
+    await loginPage.login();
+    await inventoryPage.selectSocialLink("twitter");
   });
   it("Facebook is opended, in the new tab, by clicking on the Facebook link", async () => {
-    await LoginPage.open();
-    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
-    await LoginPage.login();
-    await InventoryPage.selectSocialLink("facebook");
+    await loginPage.open();
+    await loginPage.fillOutInputs(standardUser, password);
+    await loginPage.login();
+    await inventoryPage.selectSocialLink("facebook");
   });
   it("Linkedin is opended, in the new tab, by clicking on the Linkedin link", async () => {
-    await LoginPage.open();
-    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
-    await LoginPage.login();
-    await InventoryPage.selectSocialLink("linkedin");
+    await loginPage.open();
+    await loginPage.fillOutInputs(standardUser, password);
+    await loginPage.login();
+    await inventoryPage.selectSocialLink("linkedin");
   });
 });

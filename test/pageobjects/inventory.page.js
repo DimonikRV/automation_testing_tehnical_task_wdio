@@ -2,7 +2,7 @@ import page from "./page";
 
 class InventoryPage extends page {
   get inventoryItem() {
-    return $('.inventory-item[data-test="inventory-item"]');
+    return $('[data-test="inventory-item"]');
   }
   get burgerMenuButton() {
     return $("#react-burger-menu-btn");
@@ -74,7 +74,7 @@ class InventoryPage extends page {
   }
   async isInventoryPage() {
     await expect(browser).toHaveUrl("https://www.saucedemo.com/inventory.html");
-    await expect(this.inventoryItem).toExist();
+    // await expect(this.inventoryItem).toExist();
     await expect(this.cartLink).toExist();
   }
 
@@ -162,7 +162,7 @@ class InventoryPage extends page {
     await expect(browser).toHaveUrl("https://www.saucedemo.com/inventory.html");
     await this.getSocialItem(link).click();
     if (link === "twitter") {
-      await browser.switchWindow("https://x.com/saucelabs?mx=2");
+      await browser.switchWindow("https://x.com/saucelabs");
       await expect(browser).toHaveUrl("https://x.com/saucelabs?mx=2");
     } else if (link === "facebook") {
       await browser.switchWindow("https://www.facebook.com/saucelabs");

@@ -1,13 +1,16 @@
-const LoginPage = require("../pageobjects/login.page");
-const InventoryPage = require("../pageobjects/inventory.page");
+import loginPage from "../pageobjects/login.page";
+import inventoryPage from "../pageobjects/inventory.page";
 
 describe("Logout", () => {
+  const standardUser = process.env.STANDARD_USER_NAME;
+  const password = process.env.SECRET_PASSWORD;
+
   it("Logout by clicking on the logout_sidebar_link in the BurgerMenu", async () => {
-    await LoginPage.open();
-    await LoginPage.fillOutInputs("standard_user", "secret_sauce");
-    await LoginPage.login();
-    await InventoryPage.isSidebarElements();
-    await InventoryPage.logout();
-    await LoginPage.checkIfEmptyInputFields();
+    await loginPage.open();
+    await loginPage.fillOutInputs(standardUser, password);
+    await loginPage.login();
+    await inventoryPage.isSidebarElements();
+    await inventoryPage.logout();
+    await loginPage.checkIfEmptyInputFields();
   });
 });
