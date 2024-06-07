@@ -1,6 +1,3 @@
-node_modules/
-allure-report/
-allure-results/
-junit-reports/
-.env/
-.tmp/
+node_modules
+allure-results
+.tmp
